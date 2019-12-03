@@ -3,4 +3,4 @@ Trabalho prático para UC Computação Científica
 
 ## Esquema
 
-![esquema](esquema_cc.png)
+![esquema](./esquema_cc.png)
