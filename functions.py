@@ -1,4 +1,5 @@
 import numpy as np
+#oioioio
 
 class Utente:
     def __init__(self, prioridade, horaEntrada, saida_fase1, saida_fase2, saida_fase3, balcao_Fase2, tempoAt_Balcao_Fase1, tempoAt_BalcaoA_Fase2, tempoAt_BalcaoB_Fase2, tempoAt_BalcaoC_Fase2, tempoAt_Balcao_Fase3):
