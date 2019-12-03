@@ -31,7 +31,7 @@ class Utente:
 # exmeplo: utente1 = utente(0, 9, 2, 0, 1, 1, 2, 3, 4, 5);
 
 # FILAS FASE 1
-list_Fase1_Geral = []
+list_Fase1_Geral = [];
 list_Fase1_Prioritaria = []
 # FILAS FASE 2
 list_Fase2_BalcaoA = []
