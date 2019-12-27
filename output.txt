@@ -1,0 +1,126 @@
+ID: 1 | Prioridade: 0 | Entrada: 15597 | Tempos: Tr:26, B:605
+ID: 2 | Prioridade: 2 | Entrada: 11352 | Tempos: Tr:83, A:1333
+ID: 3 | Prioridade: 2 | Entrada: 25904 | Tempos: Tr:102, A:642, Te:39, A:295
+ID: 4 | Prioridade: 0 | Entrada: 11702 | Tempos: Tr:162, B:149
+ID: 5 | Prioridade: 0 | Entrada: 16889 | Tempos: Tr:16, B:162
+ID: 6 | Prioridade: 2 | Entrada: 24287 | Tempos: Tr:139, Te:138
+ID: 7 | Prioridade: 0 | Entrada: 18081 | Tempos: Tr:34, A:1442
+ID: 8 | Prioridade: 0 | Entrada: 18798 | Tempos: Tr:72, Te:26
+ID: 9 | Prioridade: 0 | Entrada: 27784 | Tempos: Tr:94, C:662, Te:26
+ID: 10 | Prioridade: 0 | Entrada: 17547 | Tempos: Tr:91, C:912
+ID: 11 | Prioridade: 0 | Entrada: 3801 | Tempos: Tr:155, B:454, Te:49
+ID: 12 | Prioridade: 0 | Entrada: 14340 | Tempos: Tr:104, Te:63
+ID: 13 | Prioridade: 2 | Entrada: 18953 | Tempos: Tr:60, A:69
+ID: 14 | Prioridade: 0 | Entrada: 13879 | Tempos: Tr:85, B:210
+ID: 15 | Prioridade: 0 | Entrada: 16359 | Tempos: Tr:50, B:591
+ID: 16 | Prioridade: 0 | Entrada: 21131 | Tempos: Tr:38, B:16
+ID: 17 | Prioridade: 0 | Entrada: 17673 | Tempos: Tr:2, C:578, Te:54, C:117
+ID: 18 | Prioridade: 0 | Entrada: 12144 | Tempos: Tr:0, Te:17
+ID: 19 | Prioridade: 0 | Entrada: 22426 | Tempos: Tr:14, A:879
+ID: 20 | Prioridade: 0 | Entrada: 18969 | Tempos: Tr:51, C:697
+ID: 21 | Prioridade: 0 | Entrada: 21531 | Tempos: Tr:168, B:834
+ID: 22 | Prioridade: 0 | Entrada: 9332 | Tempos: Tr:0, B:394
+ID: 23 | Prioridade: 0 | Entrada: 10274 | Tempos: Tr:91, A:1549
+ID: 24 | Prioridade: 0 | Entrada: 15061 | Tempos: Tr:78, B:562
+ID: 25 | Prioridade: 0 | Entrada: 18896 | Tempos: Tr:42, Te:29
+ID: 26 | Prioridade: 0 | Entrada: 16567 | Tempos: Tr:81, A:1460
+ID: 27 | Prioridade: 0 | Entrada: 6611 | Tempos: Tr:64, A:255
+ID: 28 | Prioridade: 2 | Entrada: 14634 | Tempos: Tr:34, B:557
+ID: 29 | Prioridade: 2 | Entrada: 6642 | Tempos: Tr:5, A:808
+ID: 30 | Prioridade: 0 | Entrada: 24538 | Tempos: Tr:115, B:392
+ID: 31 | Prioridade: 0 | Entrada: 15518 | Tempos: Tr:83, C:7, Te:9, C:788
+ID: 32 | Prioridade: 0 | Entrada: 15561 | Tempos: Tr:1, B:881
+ID: 33 | Prioridade: 0 | Entrada: 10741 | Tempos: Tr:93, Te:84
+ID: 34 | Prioridade: 0 | Entrada: 20695 | Tempos: Tr:111, Te:108
+ID: 35 | Prioridade: 0 | Entrada: 14740 | Tempos: Tr:19, B:748
+ID: 36 | Prioridade: 0 | Entrada: 26539 | Tempos: Tr:19, A:1367
+ID: 37 | Prioridade: 0 | Entrada: 16368 | Tempos: Tr:59, A:555
+ID: 38 | Prioridade: 0 | Entrada: 16309 | Tempos: Tr:109, Te:15
+ID: 39 | Prioridade: 0 | Entrada: 3254 | Tempos: Tr:31, A:780
+ID: 40 | Prioridade: 0 | Entrada: 12918 | Tempos: Tr:176, A:349
+ID: 41 | Prioridade: 2 | Entrada: 17249 | Tempos: Tr:26, A:789
+ID: 42 | Prioridade: 0 | Entrada: 18532 | Tempos: Tr:67, A:865
+ID: 43 | Prioridade: 2 | Entrada: 11971 | Tempos: Tr:92, Te:102
+ID: 44 | Prioridade: 0 | Entrada: 7880 | Tempos: Tr:134, A:745
+ID: 45 | Prioridade: 0 | Entrada: 28797 | Tempos: Tr:58, A:456
+ID: 46 | Prioridade: 2 | Entrada: 8706 | Tempos: Tr:84, C:107, Te:92, C:641
+ID: 47 | Prioridade: 0 | Entrada: 4590 | Tempos: Tr:48, A:387
+ID: 48 | Prioridade: 0 | Entrada: 15117 | Tempos: Tr:174, B:574, Te:73
+ID: 49 | Prioridade: 0 | Entrada: 22319 | Tempos: Tr:52, C:761, Te:29, C:75
+ID: 50 | Prioridade: 0 | Entrada: 18218 | Tempos: Tr:78, B:223
+ID: 51 | Prioridade: 2 | Entrada: 8455 | Tempos: Tr:25, B:687, Te:113
+ID: 52 | Prioridade: 0 | Entrada: 217 | Tempos: Tr:33, A:1312, Te:3
+ID: 53 | Prioridade: 0 | Entrada: 20608 | Tempos: Tr:146, B:546, Te:34
+ID: 54 | Prioridade: 0 | Entrada: 21240 | Tempos: Tr:25, B:491
+ID: 55 | Prioridade: 0 | Entrada: 13376 | Tempos: Tr:109, B:369, Te:61
+ID: 56 | Prioridade: 0 | Entrada: 11744 | Tempos: Tr:23, A:119, Te:164, A:158
+ID: 57 | Prioridade: 0 | Entrada: 18039 | Tempos: Tr:23, A:1438, Te:105
+ID: 58 | Prioridade: 0 | Entrada: 19365 | Tempos: Tr:29, B:559
+ID: 59 | Prioridade: 0 | Entrada: 19522 | Tempos: Tr:50, B:208, Te:15, B:14
+ID: 60 | Prioridade: 0 | Entrada: 2488 | Tempos: Tr:27, C:432, Te:111
+ID: 61 | Prioridade: 0 | Entrada: 28185 | Tempos: Tr:104, B:391
+ID: 62 | Prioridade: 2 | Entrada: 9287 | Tempos: Tr:41, C:808, Te:82
+ID: 63 | Prioridade: 2 | Entrada: 2432 | Tempos: Tr:43, B:752, Te:38
+ID: 64 | Prioridade: 2 | Entrada: 28684 | Tempos: Tr:6, C:195
+ID: 65 | Prioridade: 0 | Entrada: 7622 | Tempos: Tr:31, B:506
+ID: 66 | Prioridade: 2 | Entrada: 15955 | Tempos: Tr:20, B:399
+ID: 67 | Prioridade: 0 | Entrada: 26937 | Tempos: Tr:26, B:204
+ID: 68 | Prioridade: 2 | Entrada: 4376 | Tempos: Tr:60, B:6
+ID: 69 | Prioridade: 0 | Entrada: 10263 | Tempos: Tr:2, B:702
+ID: 70 | Prioridade: 0 | Entrada: 18270 | Tempos: Tr:2, A:1065
+ID: 71 | Prioridade: 0 | Entrada: 18217 | Tempos: Tr:32, B:491, Te:64
+ID: 72 | Prioridade: 0 | Entrada: 19457 | Tempos: Tr:31, B:224, Te:4
+ID: 73 | Prioridade: 0 | Entrada: 18771 | Tempos: Tr:26, B:164
+ID: 74 | Prioridade: 2 | Entrada: 25929 | Tempos: Tr:125, A:583
+ID: 75 | Prioridade: 0 | Entrada: 21500 | Tempos: Tr:105, B:479, Te:111
+ID: 76 | Prioridade: 0 | Entrada: 23016 | Tempos: Tr:44, A:179
+ID: 77 | Prioridade: 0 | Entrada: 17789 | Tempos: Tr:96, Te:13
+ID: 78 | Prioridade: 0 | Entrada: 14528 | Tempos: Tr:118, C:822, Te:119
+ID: 79 | Prioridade: 0 | Entrada: 22179 | Tempos: Tr:63, A:157
+ID: 80 | Prioridade: 0 | Entrada: 14953 | Tempos: Tr:48, B:574
+ID: 81 | Prioridade: 0 | Entrada: 15708 | Tempos: Tr:66, B:16, Te:31
+ID: 82 | Prioridade: 0 | Entrada: 9149 | Tempos: Tr:6, B:296
+ID: 83 | Prioridade: 0 | Entrada: 5511 | Tempos: Tr:5, B:495
+ID: 84 | Prioridade: 0 | Entrada: 19001 | Tempos: Tr:159, A:913
+ID: 85 | Prioridade: 0 | Entrada: 14630 | Tempos: Tr:104, A:441
+ID: 86 | Prioridade: 0 | Entrada: 14910 | Tempos: Tr:133, B:466
+ID: 87 | Prioridade: 0 | Entrada: 13026 | Tempos: Tr:94, B:112
+ID: 88 | Prioridade: 0 | Entrada: 1525 | Tempos: Tr:56, B:801
+ID: 89 | Prioridade: 2 | Entrada: 10794 | Tempos: Tr:86, A:322
+ID: 90 | Prioridade: 0 | Entrada: 26970 | Tempos: Tr:76, B:615
+ID: 91 | Prioridade: 0 | Entrada: 19774 | Tempos: Tr:56, B:694
+ID: 92 | Prioridade: 0 | Entrada: 18224 | Tempos: Tr:21, B:70, Te:56
+ID: 93 | Prioridade: 0 | Entrada: 19252 | Tempos: Tr:52, Te:88
+ID: 94 | Prioridade: 0 | Entrada: 21197 | Tempos: Tr:73, A:1272
+ID: 95 | Prioridade: 2 | Entrada: 25392 | Tempos: Tr:91, B:860
+ID: 96 | Prioridade: 0 | Entrada: 19949 | Tempos: Tr:157, A:65, Te:78
+ID: 97 | Prioridade: 0 | Entrada: 3700 | Tempos: Tr:16, Te:116
+ID: 98 | Prioridade: 0 | Entrada: 11998 | Tempos: Tr:19, A:208
+ID: 99 | Prioridade: 0 | Entrada: 8159 | Tempos: Tr:137, B:436
+ID: 100 | Prioridade: 0 | Entrada: 17759 | Tempos: Tr:95, C:899
+ID: 101 | Prioridade: 0 | Entrada: 24115 | Tempos: Tr:19, A:1697
+ID: 102 | Prioridade: 0 | Entrada: 17067 | Tempos: Tr:14, C:688, Te:21
+ID: 103 | Prioridade: 0 | Entrada: 20422 | Tempos: Tr:57, A:555, Te:118
+ID: 104 | Prioridade: 2 | Entrada: 19427 | Tempos: Tr:72, B:423
+ID: 105 | Prioridade: 2 | Entrada: 9041 | Tempos: Tr:12, B:293, Te:169
+ID: 106 | Prioridade: 0 | Entrada: 7948 | Tempos: Tr:42, C:1124
+ID: 107 | Prioridade: 0 | Entrada: 11316 | Tempos: Tr:15, B:163, Te:88, B:149
+ID: 108 | Prioridade: 0 | Entrada: 16034 | Tempos: Tr:52, A:106
+ID: 109 | Prioridade: 0 | Entrada: 16216 | Tempos: Tr:103, B:630
+ID: 110 | Prioridade: 0 | Entrada: 15100 | Tempos: Tr:130, B:111, Te:85, B:497
+ID: 111 | Prioridade: 2 | Entrada: 15929 | Tempos: Tr:60, B:620
+ID: 112 | Prioridade: 0 | Entrada: 15746 | Tempos: Tr:5, C:577, Te:30
+ID: 113 | Prioridade: 0 | Entrada: 15174 | Tempos: Tr:41, B:554, Te:37
+ID: 114 | Prioridade: 0 | Entrada: 20593 | Tempos: Tr:61, B:831
+ID: 115 | Prioridade: 2 | Entrada: 16264 | Tempos: Tr:5, C:650, Te:37
+ID: 116 | Prioridade: 0 | Entrada: 7897 | Tempos: Tr:117, B:877
+ID: 117 | Prioridade: 0 | Entrada: 7488 | Tempos: Tr:15, B:336
+ID: 118 | Prioridade: 0 | Entrada: 23629 | Tempos: Tr:45, A:616
+ID: 119 | Prioridade: 0 | Entrada: 15394 | Tempos: Tr:26, B:426
+ID: 120 | Prioridade: 0 | Entrada: 616 | Tempos: Tr:18, C:754, Te:25
+ID: 121 | Prioridade: 2 | Entrada: 20187 | Tempos: Tr:3, A:128
+ID: 122 | Prioridade: 0 | Entrada: 20820 | Tempos: Tr:89, C:567, Te:12, C:605
+ID: 123 | Prioridade: 2 | Entrada: 10414 | Tempos: Tr:94, A:108, Te:84
+ID: 124 | Prioridade: 0 | Entrada: 16209 | Tempos: Tr:12, A:1413
+ID: 125 | Prioridade: 2 | Entrada: 16216 | Tempos: Tr:109, A:98
+(217, <functions.Utente object at 0x10d391e50>)
