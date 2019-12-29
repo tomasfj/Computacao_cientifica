@@ -5,20 +5,32 @@ from functions import *
 # ----------------------------
 fila_fase_1 = [[],[]]
 balcao_Tr = None
+tempo_1=0
+tempo_aux_1=0
 
 fila_fase_2_A = [[],[]]
 balcao_A1 = None
 balcao_A2 = None
+tempo_2_A=0
+tempo_aux_2_A1=0
+tempo_aux_2_A2=0
 
 fila_fase_2_B = [[],[]]
 balcao_B1 = None
 balcao_B2 = None
+tempo_2_B=0
+tempo_aux_2_B1=0
+tempo_aux_2_B2=0
 
 fila_fase_2_C = [[],[]]
 balcao_C1 = None
+tempo_2_C=0
+tempo_aux_2_C=0
 
 fila_fase_3 = [[],[]]
 balcao_Te = None
+tempo_3=0
+tempo_aux_3=0
 # ----------------------------
 
 # PREPARATIVOS INICIAIS
@@ -67,6 +79,7 @@ while(not parar_simulacao(tabela[-1])):
             balcao_Tr = utente_atual
             linha_tabela.update({"partida_triagem": instante + utente_atual.tempos.get("tr")})
             utente_atual.estado_atual = "triagem"
+            tempo_1+=(instante-tempo_aux_1)
 
         else: # balcão de triagem ocupado, o utente vai para a fila de espera da triagem
             adicionar_fila(utente_atual,fila_fase_1)
@@ -94,6 +107,7 @@ while(not parar_simulacao(tabela[-1])):
 
             else:
                 linha_tabela.update({"partida_triagem": infinito})
+                tempo_aux_1=instante
             # -----------------------------------------------------------------------------------------
 
             # ATUALIZAR A PARTE DA TESOURARIA
@@ -107,6 +121,7 @@ while(not parar_simulacao(tabela[-1])):
                     balcao_Te = utente_atual
                     linha_tabela.update({"partida_tesouraria": instante + utente_atual.tempos.get("te")})
                     utente_atual.estado_atual = "tesouraria"
+                    tempo_3+=instante-tempo_aux_3
 
                 else: # balcão da tesouraria ocupada, o utente vai para a fila
                     adicionar_fila(utente_atual,fila_fase_3)
@@ -133,12 +148,14 @@ while(not parar_simulacao(tabela[-1])):
                 linha_tabela.update({"partida_balcao_A1": instante + tempo_aux})
                 utente_atual.estado_atual = "balcao_A1"
                 controlo = "A1"
+                tempo_2_A += (instante-tempo_aux_2_A1)
 
             elif(balcao_A2==None): # balcão A2 livre
                 balcao_A2 = utente_atual
                 linha_tabela.update({"partida_balcao_A2": instante + tempo_aux})
                 utente_atual.estado_atual = "balcao_A2"
                 controlo = "A2"
+                tempo_2_A += (instante-tempo_aux_2_A2)
 
             if(controlo==None): # todos os balcões deste tipo ocupados, o utente vai para a fila
                 adicionar_fila(utente_atual,fila_fase_2_A)
@@ -158,12 +175,14 @@ while(not parar_simulacao(tabela[-1])):
                 linha_tabela.update({"partida_balcao_B1": instante + tempo_aux})
                 utente_atual.estado_atual = "balcao_B1"
                 controlo = "B1"
+                tempo_2_B += (instante-tempo_aux_2_B1)
 
             elif(balcao_B2==None): # balcão B2 livre
                 balcao_B2 = utente_atual
                 linha_tabela.update({"partida_balcao_B2": instante + tempo_aux})
                 utente_atual.estado_atual = "balcao_B2"
                 controlo = "B2"
+                tempo_2_B += (instante-tempo_aux_2_B2)
 
             if(controlo==None): # todos os balcões deste tipo ocupados, o utente vai para a fila
                 adicionar_fila(utente_atual,fila_fase_2_B)
@@ -183,6 +202,7 @@ while(not parar_simulacao(tabela[-1])):
                 linha_tabela.update({"partida_balcao_C1": instante + tempo_aux})
                 utente_atual.estado_atual = "balcao_C1"
                 controlo = "C1"
+                tempo_2_C += (instante-tempo_aux_2_C)
 
             if(controlo==None): # todos os balcões deste tipo ocupados, o utente vai para a fila
                 adicionar_fila(utente_atual,fila_fase_2_C)
@@ -222,6 +242,7 @@ while(not parar_simulacao(tabela[-1])):
 
         else:
             linha_tabela.update({"partida_tesouraria": infinito})
+            tempo_aux_3 = instante
 
         if(utente_atual.tempos.get(balcao + "_volta")!=None): # o utente vai voltar para a fase 2
             utente_volta = True
@@ -256,6 +277,7 @@ while(not parar_simulacao(tabela[-1])):
 
             else:
                 linha_tabela.update({"partida_balcao_A1": infinito})
+                tempo_aux_2_A1=instante
 
         elif(aux=="A2"): 
             balcao_A2 = escolher_fila(fila)
@@ -267,6 +289,7 @@ while(not parar_simulacao(tabela[-1])):
 
             else:
                 linha_tabela.update({"partida_balcao_A2": infinito})
+                tempo_aux_2_A2=instante
 
         elif(aux=="B1"): 
             balcao_B1 = escolher_fila(fila)
@@ -278,6 +301,7 @@ while(not parar_simulacao(tabela[-1])):
 
             else:
                 linha_tabela.update({"partida_balcao_B1": infinito})
+                tempo_aux_2_B1=instante
 
         elif(aux=="B2"): 
             balcao_B2 = escolher_fila(fila)
@@ -289,6 +313,7 @@ while(not parar_simulacao(tabela[-1])):
 
             else:
                 linha_tabela.update({"partida_balcao_B2": infinito})
+                tempo_aux_2_B2=instante
 
         elif(aux=="C1"): 
             balcao_C1 = escolher_fila(fila)
@@ -300,6 +325,7 @@ while(not parar_simulacao(tabela[-1])):
 
             else:
                 linha_tabela.update({"partida_balcao_C1": infinito})
+                tempo_aux_2_C=instante
         # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         # SEGUIR COM O UTENTE QUE SAIU DOS BALCÕES (ENTRADA NA FASE 3) OU SAÍDA DO SISTEMA
@@ -313,6 +339,7 @@ while(not parar_simulacao(tabela[-1])):
                 balcao_Te = utente_atual
                 linha_tabela.update({"partida_tesouraria": instante + utente_atual.tempos.get("te")})
                 utente_atual.estado_atual = "tesouraria"
+                tempo_3+=(instante-tempo_aux_3)
             else:
                 adicionar_fila(utente_atual,fila_fase_3)
                 utente_atual.chegadas_filas.update({"fila_fase_3": instante})
@@ -340,4 +367,23 @@ while(not parar_simulacao(tabela[-1])):
     utente_volta = False
     iteracoes+=1
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Print soma total de tempos de espera, fila da fase 1,fila da fase 2_a ,fila da fase 2_b,fila da fase 2_c, fila da fase 3, numero de utentes , a soma por utentes, a soma por utentes em minutos
+soma,soma_fila_fase_1, soma_fila_fase_2_A, soma_fila_fase_2_B , soma_fila_fase_2_C, soma_fila_fase_3=calcular_tempos_espera(utentes)
+print(soma,soma_fila_fase_1, soma_fila_fase_2_A, soma_fila_fase_2_B , soma_fila_fase_2_C, soma_fila_fase_3, num_utentes,soma/num_utentes,(soma/num_utentes)/60)
+
+
+tempo_1+=(tabela[-1]['clock']- tempo_aux_1)
+tempo_2_A+=(tabela[-1]['clock']  -tempo_aux_2_A1)+(tabela[-1]['clock']-tempo_aux_2_A2)
+tempo_2_B+=(tabela[-1]['clock']  -tempo_aux_2_B1)+(tabela[-1]['clock']-tempo_aux_2_B2)
+tempo_2_C+=(tabela[-1]['clock']  -tempo_aux_2_C)
+tempo_3+=(tabela[-1]['clock']-tempo_aux_3)
+#print do tempo total, o tempo total do sistema, Taxa de ocupação em percentagem 
+print("Tempo 1:"+str(tempo_1),tabela[-1]['clock'],(1-((tempo_1)/(tabela[-1]['clock'])))*100)
+print("Tempo 1:"+str(tempo_2_A),tabela[-1]['clock'],(1-((tempo_2_A)/((tabela[-1]['clock'])*2)))*100)
+print("Tempo 1:"+str(tempo_2_B),tabela[-1]['clock'],(1-((tempo_2_B)/((tabela[-1]['clock'])*2)))*100)
+print("Tempo 1:"+str(tempo_2_C),tabela[-1]['clock'],(1-((tempo_2_C)/tabela[-1]['clock']))*100)
+print("Tempo 1:"+str(tempo_3),tabela[-1]['clock'],(1-((tempo_3)/tabela[-1]['clock']))*100)
+#print(tabela[-1]['clock'])
+
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

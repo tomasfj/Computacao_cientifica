@@ -307,8 +307,22 @@ def imprimir_linha_tabela(utente_atual,linha_tabela,fila_fase_1,balcao_Tr,fila_f
     print("| {:<6} | {:<18} | {:<6} | {:<13} | {:<35} | {:<10} | {:<11} | {:<35} | {:<11} | {:<12} | {:<11} | {:<12} | {:<35} | {:<11} | {:<12} | {:<11} | {:<12} | {:<35} | {:<11} | {:<12} | {:<35} | {:<10} | {:<11} |".format(linha_tabela.get("clock"),tipo,utente,proxima_chegada_imprimir,fila_fase_1_imprimir,balcao_Tr_imprimir,partida_triagem_imprimir,fila_fase_2_A_imprimir,balcao_A1_imprimir,partida_balcao_A1_imprimir,balcao_A2_imprimir,partida_balcao_A2_imprimir,fila_fase_2_B_imprimir,balcao_B1_imprimir,partida_balcao_B1_imprimir,balcao_B2_imprimir,partida_balcao_B2_imprimir,fila_fase_2_C_imprimir,balcao_C1_imprimir,partida_balcao_C1_imprimir,fila_fase_3_imprimir,balcao_Te_imprimir,partida_tesouraria_imprimir))
 
 def calcular_tempos_espera(utentes): # função que calcula os tempos de espera mínimos, médios e máximos em todas as filas (em períodos parciais e globais)
-    # TODO
-    return
+    soma=0
+    soma_fase_1=0
+    soma_fila_fase_2_A=0
+    soma_fila_fase_1=0
+    soma_fila_fase_2_C=0
+    soma_fila_fase_2_B=0
+    soma_fila_fase_3=0
+    for utente in utentes:
+        for i in utente.tempos_espera.items():
+            soma+=i[1]
+        soma_fila_fase_2_A += utente.tempos_espera['fila_fase_2_A']
+        soma_fila_fase_1 += utente.tempos_espera['fila_fase_1']
+        soma_fila_fase_2_C += utente.tempos_espera['fila_fase_2_C']
+        soma_fila_fase_2_B += utente.tempos_espera['fila_fase_2_B']
+        soma_fila_fase_3 += utente.tempos_espera['fila_fase_3']
+    return soma,soma_fila_fase_1, soma_fila_fase_2_A, soma_fila_fase_2_B , soma_fila_fase_2_C, soma_fila_fase_3 
 
 def calcular_taxas_ocupacao(utentes): # função que calcula as taxas de ocupação em todas os balcões de atendimento (em períodos parciais e globais)
     # TODO
