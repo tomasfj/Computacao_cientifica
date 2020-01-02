@@ -150,11 +150,11 @@ def gerar_utentes(num_utentes): # função que gera todos os utentes que o siste
         i.tempos.update({"C_volta":tempo_aux-i.tempos.get("C")})
         i.tempos_espera.update({"fila_fase_2_C_volta": 0})
     # ----------------------------------------------------------------------------------
-
+    '''
     print("# UTENTES")
     print("---------")
     for i in utentes: print(i.str())
-    print("---------")
+    print("---------")'''
     return(utentes)
 
 def adicionar_fila(utente, fila): # função que adiciona o utente à fila passada como parâmetro
