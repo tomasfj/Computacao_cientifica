@@ -134,18 +134,21 @@ def gerar_utentes(num_utentes): # função que gera todos os utentes que o siste
         tempo_aux = i.tempos.get("A")
         i.tempos.update({"A":random.randint(1,tempo_aux)})
         i.tempos.update({"A_volta":tempo_aux-i.tempos.get("A")})
+        i.tempos_espera.update({"fila_fase_2_A_volta": 0})
 
     for i in fase_3_B_voltam: # utentes que retornam aos balcões B da fase 2
         i.prioridade = "R"
         tempo_aux = i.tempos.get("B")
         i.tempos.update({"B":random.randint(1,tempo_aux)})
         i.tempos.update({"B_volta":tempo_aux-i.tempos.get("B")})
+        i.tempos_espera.update({"fila_fase_2_B_volta": 0})
 
     for i in fase_3_C_voltam: # utentes que retornam ao balcão C da fase 2
         i.prioridade = "R"
         tempo_aux = i.tempos.get("C")
         i.tempos.update({"C":random.randint(1,tempo_aux)})
         i.tempos.update({"C_volta":tempo_aux-i.tempos.get("C")})
+        i.tempos_espera.update({"fila_fase_2_C_volta": 0})
     # ----------------------------------------------------------------------------------
 
     print("# UTENTES")
@@ -309,6 +312,85 @@ def imprimir_linha_tabela(utente_atual,linha_tabela,fila_fase_1,balcao_Tr,fila_f
     # imprimir linha da tabela
     print("| {:<6} | {:<18} | {:<6} | {:<13} | {:<60} | {:<10} | {:<11} | {:<60} | {:<11} | {:<12} | {:<11} | {:<12} | {:<60} | {:<11} | {:<12} | {:<11} | {:<12} | {:<60} | {:<11} | {:<12} | {:<60} | {:<10} | {:<11} |".format(linha_tabela.get("clock"),tipo,utente,proxima_chegada_imprimir,fila_fase_1_imprimir,balcao_Tr_imprimir,partida_triagem_imprimir,fila_fase_2_A_imprimir,balcao_A1_imprimir,partida_balcao_A1_imprimir,balcao_A2_imprimir,partida_balcao_A2_imprimir,fila_fase_2_B_imprimir,balcao_B1_imprimir,partida_balcao_B1_imprimir,balcao_B2_imprimir,partida_balcao_B2_imprimir,fila_fase_2_C_imprimir,balcao_C1_imprimir,partida_balcao_C1_imprimir,fila_fase_3_imprimir,balcao_Te_imprimir,partida_tesouraria_imprimir))
 
+def utentes_no_intervalo(fase,intervalo,utentes):
+
+    infinito = 100000000
+    num_utentes = 0
+
+    # OBTER O INTERVALO REQUISITADO
+    # -----------------------------
+    if(intervalo=="0"): 
+        menor = 0
+        maior = 7200
+    elif(intervalo=="1"):
+        menor = 7201
+        maior = 14400
+    elif(intervalo=="2"):
+        menor = 14401
+        maior = 21600
+    elif(intervalo=="3"):
+        menor = 21601
+        maior = 28800
+    else:
+        menor = 28800
+        maior = infinito
+    # -----------------------------
+
+    for i in utentes:
+
+        # obter o balcão do utente
+        balcao = ""
+        if(i.tempos.get("A")!=None): balcao = "A"
+        if(i.tempos.get("B")!=None): balcao = "B"
+        if(i.tempos.get("C")!=None): balcao = "C"
+
+        # CASOS ESPECIAIS
+        # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if((fase==2 and i.direto) or (fase==3 and i.tempos.get("te")==None)): # casos especiais
+            continue
+
+        if(i.prioridade=="R" and fase==2): # um dos utentes que faz retrocesso
+
+            passagem = [0,0]
+            # primeira passagem pela fase 2
+            passagem[0] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr")
+            passagem[1] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_2_" + balcao) + i.tempos.get(balcao)
+
+            if((passagem[0]>=menor and passagem[0]<=maior) or (passagem[1]>=menor and passagem[1]<=maior) or (menor>=passagem[0] and maior<=passagem[1])): 
+                num_utentes += 1
+                continue
+
+            # segunda passagem pela fase 2
+            passagem[0] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_2_" + balcao) + i.tempos.get(balcao) + i.tempos_espera.get("fila_fase_3") + i.tempos.get("te")
+            passagem[1] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_2_" + balcao) + i.tempos.get(balcao) + i.tempos_espera.get("fila_fase_3") + i.tempos.get("te") + i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") + i.tempos.get(balcao + "_volta")
+            
+            if((passagem[0]>=menor and passagem[0]<=maior) or (passagem[1]>=menor and passagem[1]<=maior) or (menor>=passagem[0] and maior<=passagem[1])): num_utentes += 1
+        # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
+        # CASOS NORMAIS
+        # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        else:
+            passagem = [0,0]
+            # avaliar se o utente esteve na fase e intervalo passados por parâmetro
+            if(fase==1): 
+                passagem[0] = i.hora_entrada
+                passagem[1] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr")
+            elif(fase==2):
+                passagem[0] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr")
+                passagem[1] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_2_" + balcao) + i.tempos.get(balcao)
+            else:
+                if(i.direto):
+                    passagem[0] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr")
+                    passagem[1] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_3") + i.tempos.get("te")
+                else:
+                    passagem[0] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_2_" + balcao) + i.tempos.get(balcao)
+                    passagem[1] = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_2_" + balcao) + i.tempos.get(balcao) + i.tempos_espera.get("fila_fase_3") + i.tempos.get("te")
+                
+            if((passagem[0]>=menor and passagem[0]<=maior) or (passagem[1]>=menor and passagem[1]<=maior) or (menor>=passagem[0] and maior<=passagem[1])): num_utentes += 1
+        # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
+    return(num_utentes)
+
 def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempos de espera mínimos, médios e máximos em todas as filas (em períodos parciais e globais)
     
     infinito = 100000000
@@ -324,7 +406,7 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
     for i in utentes:
 
         # TEMPOS PARCIAIS NA FASE 1
-        # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         # perceber em que intervalo(s) começa e acaba a passagem do utente pela fase 1
         inicio = int((i.hora_entrada)/7200)
         fim = int((i.hora_entrada + i.tempos_espera.get("fila_fase_1"))/7200)
@@ -366,13 +448,44 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
                 if((i.tempos_espera.get("fila_fase_1") - ((fim*7200) - i.hora_entrada))>tempos_fase_1.get(str(fim)).get("maximo")):
                     tempos_fase_1.get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_1") - ((fim*7200) - i.hora_entrada)})
 
+            elif((fim-inicio)==2): # o utente passou por 3 intervalos
+                
+                # tempo de espera médio
+                tempos_fase_1.get(str(inicio)).update({"medio": tempos_fase_1.get(str(inicio)).get("medio") + (fim*7200) - i.hora_entrada})
+                tempos_fase_1.get(str(inicio+1)).update({"medio": tempos_fase_1.get(str(inicio+1)).get("medio") + 7200})
+                tempos_fase_1.get(str(fim)).update({"medio": tempos_fase_1.get(str(fim)).get("medio") + i.tempos_espera.get("fila_fase_1") - (((fim*7200) - i.hora_entrada) + 7200)})
+
+                # tempo de espera mínimo (primeiro intervalo)
+                if(((fim*7200) - i.hora_entrada)<tempos_fase_1.get(str(inicio)).get("minimo")):
+                    tempos_fase_1.get(str(inicio)).update({"minimo": (fim*7200) - i.hora_entrada})
+
+                # tempo de espera máximo (primeiro intervalo)
+                if(((fim*7200) - i.hora_entrada)>tempos_fase_1.get(str(inicio)).get("maximo")):
+                    tempos_fase_1.get(str(inicio)).update({"maximo": (fim*7200) - i.hora_entrada})
+
+                # tempo de espera mínimo (segundo intervalo)
+                if(7200<tempos_fase_1.get(str(inicio+1)).get("minimo")):
+                    tempos_fase_1.get(str(inicio+1)).update({"minimo": 7200})
+
+                # tempo de espera máximo (segundo intervalo)
+                if(7200>tempos_fase_1.get(str(inicio+1)).get("maximo")):
+                    tempos_fase_1.get(str(inicio+1)).update({"maximo": 7200})
+                
+                # tempo de espera mínimo (terceiro intervalo)
+                if((i.tempos_espera.get("fila_fase_1") - (((fim*7200) - i.hora_entrada) + 7200))<tempos_fase_1.get(str(fim)).get("minimo")):
+                    tempos_fase_1.get(str(fim)).update({"minimo": 7200})
+
+                # tempo de espera máximo (terceiro intervalo)
+                if((i.tempos_espera.get("fila_fase_1") - (((fim*7200) - i.hora_entrada) + 7200))>tempos_fase_1.get(str(fim)).get("maximo")):
+                    tempos_fase_1.get(str(fim)).update({"maximo": 7200})
+
             # TODO: mais intervalos??
-        # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         if(not i.direto): 
 
             # TEMPOS PARCIAIS NA FASE 2
-            # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             # obter o balcão do utente
             balcao = ""
             if(i.tempos.get("A")!=None): balcao = "A"
@@ -384,7 +497,7 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
             inicio = int((entrada_fase_2)/7200)
             fim = int((entrada_fase_2 + i.tempos_espera.get("fila_fase_2_" + balcao))/7200)
 
-            if(i.tempos_espera.get("fila_fase_2_" + balcao)!=0): # o utente esteve pelo menos 1 instante à espera
+            if(i.tempos_espera.get("fila_fase_2_" + balcao)!=0): # o utente esteve pelo menos 1 instante à espera na primeira e (possivelmente) única vez que passou pela fase 2
 
                 if(inicio==fim): # caso ideal, estamos sempre no mesmo intervalo
 
@@ -421,14 +534,119 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
                     if((i.tempos_espera.get("fila_fase_2_" + balcao) - ((fim*7200) - entrada_fase_2))>tempos_fase_2.get(balcao).get(str(fim)).get("maximo")):
                         tempos_fase_2.get(balcao).get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_2_" + balcao) - ((fim*7200) - entrada_fase_2)})
 
+                elif((fim-inicio)==2): # o utente passou por 2 intervalos
+
+                    # tempo de espera médio
+                    tempos_fase_2.get(balcao).get(str(inicio)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + (fim*7200) - entrada_fase_2})
+                    tempos_fase_2.get(balcao).get(str(inicio+1)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio+1)).get("medio") + 7200})
+                    tempos_fase_2.get(balcao).get(str(fim)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + i.tempos_espera.get("fila_fase_2_" + balcao) - (((fim*7200) - entrada_fase_2) + 7200)})
+
+                    # tempo de espera mínimo (primeiro intervalo)
+                    if(((fim*7200) - entrada_fase_2)<tempos_fase_2.get(balcao).get(str(inicio)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"minimo": (fim*7200) - entrada_fase_2})
+                    
+                    # tempo de espera máximo (primeiro intervalo)
+                    if(((fim*7200) - entrada_fase_2)>tempos_fase_2.get(balcao).get(str(inicio)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"maximo": (fim*7200) - entrada_fase_2})
+
+                    # tempo de espera mínimo (segundo intervalo)
+                    if(7200<tempos_fase_2.get(balcao).get(str(inicio+1)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(inicio+1)).update({"minimo": 7200})
+
+                    # tempo de espera máximo (segundo intervalo)
+                    if(7200>tempos_fase_2.get(balcao).get(str(inicio+1)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(inicio+1)).update({"maximo": 7200})
+
+                    # tempo de espera mínimo (terceiro intervalo)
+                    if((i.tempos_espera.get("fila_fase_2_" + balcao) - (((fim*7200) - entrada_fase_2) + 7200))<tempos_fase_2.get(balcao).get(str(fim)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(fim)).update({"minimo": i.tempos_espera.get("fila_fase_2_" + balcao) - (((fim*7200) - entrada_fase_2) + 7200)})
+
+                    # tempo de espera máximo (terceiro intervalo)
+                    if((i.tempos_espera.get("fila_fase_2_" + balcao) - (((fim*7200) - entrada_fase_2) + 7200))>tempos_fase_2.get(balcao).get(str(fim)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_2_" + balcao) - (((fim*7200) - entrada_fase_2) + 7200)})
+
+
                 # TODO: mais intervalos??
-            # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            if(i.prioridade=="R" and i.tempos_espera.get("fila_fase_2_" + balcao + "_volta")!=0): # o utente esteve pelo menos 1 instante à espera na segunda passagem pela fase 2
+
+                entrada_fase_2 = i.hora_entrada + i.tempos_espera.get("fila_fase_1") + i.tempos.get("tr") + i.tempos_espera.get("fila_fase_2_" + balcao) + i.tempos.get(balcao) + i.tempos_espera.get("fila_fase_3") + i.tempos.get("te")
+
+                inicio = int((entrada_fase_2)/7200)
+                fim = int((entrada_fase_2 + i.tempos_espera.get("fila_fase_2_" + balcao + "_volta"))/7200)
+
+                if(inicio==fim): # caso ideal, estamos sempre no mesmo intervalo
+
+                    # tempo de espera médio
+                    tempos_fase_2.get(balcao).get(str(inicio)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + i.tempos_espera.get("fila_fase_2_" + balcao + "_volta")})
+
+                    # tempo de espera mínimo
+                    if(i.tempos_espera.get("fila_fase_2_" + balcao + "_volta")<tempos_fase_2.get(balcao).get(str(inicio)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"minimo": i.tempos_espera.get("fila_fase_2_" + balcao + "_volta")})
+
+                    # tempo de espera máximo
+                    if(i.tempos_espera.get("fila_fase_2_" + balcao + "_volta")>tempos_fase_2.get(balcao).get(str(inicio)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"maximo": i.tempos_espera.get("fila_fase_2_" + balcao + "_volta")})
+
+                elif((fim-inicio)==1): # o utente passou por 2 intervalos
+
+                    # tempo de espera médio
+                    tempos_fase_2.get(balcao).get(str(inicio)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + (fim*7200) - entrada_fase_2})
+                    tempos_fase_2.get(balcao).get(str(fim)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - ((fim*7200) - entrada_fase_2)})
+
+                    # tempo de espera mínimo (primeiro intervalo)
+                    if(((fim*7200) - entrada_fase_2)<tempos_fase_2.get(balcao).get(str(inicio)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"minimo": (fim*7200) - entrada_fase_2})
+                    
+                    # tempo de espera máximo (primeiro intervalo)
+                    if(((fim*7200) - entrada_fase_2)>tempos_fase_2.get(balcao).get(str(inicio)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"maximo": (fim*7200) - entrada_fase_2})
+
+                    # tempo de espera mínimo (segundo intervalo)
+                    if((i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - ((fim*7200) - entrada_fase_2))<tempos_fase_2.get(balcao).get(str(fim)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(fim)).update({"minimo": i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - ((fim*7200) - entrada_fase_2)})
+
+                    # tempo de espera máximo (segundo intervalo)
+                    if((i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - ((fim*7200) - entrada_fase_2))>tempos_fase_2.get(balcao).get(str(fim)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - ((fim*7200) - entrada_fase_2)})
+           
+                elif((fim-inicio)==2): # o utente passou por 2 intervalos
+
+                    # tempo de espera médio
+                    tempos_fase_2.get(balcao).get(str(inicio)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + (fim*7200) - entrada_fase_2})
+                    tempos_fase_2.get(balcao).get(str(inicio+1)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio+1)).get("medio") + 7200})
+                    tempos_fase_2.get(balcao).get(str(fim)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - (((fim*7200) - entrada_fase_2) + 7200)})
+
+                    # tempo de espera mínimo (primeiro intervalo)
+                    if(((fim*7200) - entrada_fase_2)<tempos_fase_2.get(balcao).get(str(inicio)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"minimo": (fim*7200) - entrada_fase_2})
+                    
+                    # tempo de espera máximo (primeiro intervalo)
+                    if(((fim*7200) - entrada_fase_2)>tempos_fase_2.get(balcao).get(str(inicio)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(inicio)).update({"maximo": (fim*7200) - entrada_fase_2})
+
+                    # tempo de espera mínimo (segundo intervalo)
+                    if(7200<tempos_fase_2.get(balcao).get(str(inicio+1)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(inicio+1)).update({"minimo": 7200})
+
+                    # tempo de espera máximo (segundo intervalo)
+                    if(7200>tempos_fase_2.get(balcao).get(str(inicio+1)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(inicio+1)).update({"maximo": 7200}) 
+
+                    # tempo de espera mínimo (terceiro intervalo)
+                    if((i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - (((fim*7200) - entrada_fase_2) + 7200))<tempos_fase_2.get(balcao).get(str(fim)).get("minimo")):
+                        tempos_fase_2.get(balcao).get(str(fim)).update({"minimo": (i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - (((fim*7200) - entrada_fase_2) + 7200))})
+
+                    # tempo de espera máximo (terceiro intervalo)
+                    if((i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - (((fim*7200) - entrada_fase_2) + 7200))>tempos_fase_2.get(balcao).get(str(fim)).get("maximo")):
+                        tempos_fase_2.get(balcao).get(str(fim)).update({"maximo": (i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - (((fim*7200) - entrada_fase_2) + 7200))})  
+            # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         if(i.tempos.get("te")==None): # o utente não passa pela tesouraria
             continue
 
         # TEMPOS PARCIAIS NA FASE 3
-        # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         # obter o balcão do utente
         balcao = ""
         if(i.tempos.get("A")!=None): balcao = "A"
@@ -480,8 +698,39 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
                 if((i.tempos_espera.get("fila_fase_3") - ((fim*7200) - entrada_fase_3))>tempos_fase_3.get(str(fim)).get("maximo")):
                     tempos_fase_3.get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_3") - ((fim*7200) - entrada_fase_3)})
 
+            elif((fim-inicio)==2): # o utente passou por 2 intervalos
+
+                # tempo de espera médio
+                tempos_fase_3.get(str(inicio)).update({"medio": tempos_fase_3.get(str(inicio)).get("medio") + (fim*7200) - entrada_fase_3})
+                tempos_fase_3.get(str(inicio+1)).update({"medio": tempos_fase_3.get(str(inicio+1)).get("medio") + 7200})
+                tempos_fase_3.get(str(fim)).update({"medio": tempos_fase_3.get(str(fim)).get("medio") + i.tempos_espera.get("fila_fase_3") - (((fim*7200) - entrada_fase_3) + 7200)})
+
+                # tempo de espera mínimo (primeiro intervalo)
+                if(((fim*7200) - entrada_fase_3)<tempos_fase_3.get(str(inicio)).get("minimo")):
+                    tempos_fase_3.get(str(inicio)).update({"minimo": (fim*7200) - entrada_fase_3})
+                
+                # tempo de espera máximo (primeiro intervalo)
+                if(((fim*7200) - entrada_fase_3)>tempos_fase_3.get(str(inicio)).get("maximo")):
+                    tempos_fase_3.get(str(inicio)).update({"maximo": (fim*7200) - entrada_fase_3})
+
+                # tempo de espera mínimo (segundo intervalo)
+                if(7200<tempos_fase_3.get(str(inicio+1)).get("minimo")):
+                    tempos_fase_3.get(str(inicio+1)).update({"minimo": 7200})
+
+                # tempo de espera máximo (segundo intervalo)
+                if(7200>tempos_fase_3.get(str(inicio+1)).get("maximo")):
+                    tempos_fase_3.get(str(inicio+1)).update({"maximo": 7200})
+
+                # tempo de espera mínimo (terceiro intervalo)
+                if((i.tempos_espera.get("fila_fase_3") - (((fim*7200) - entrada_fase_3) + 7200))<tempos_fase_3.get(str(fim)).get("minimo")):
+                    tempos_fase_3.get(str(fim)).update({"minimo": (i.tempos_espera.get("fila_fase_3") - (((fim*7200) - entrada_fase_3) + 7200))})
+
+                # tempo de espera máximo (terceiro intervalo)
+                if((i.tempos_espera.get("fila_fase_3") - (((fim*7200) - entrada_fase_3) + 7200))>tempos_fase_3.get(str(fim)).get("maximo")):
+                    tempos_fase_3.get(str(fim)).update({"maximo": (i.tempos_espera.get("fila_fase_3") - (((fim*7200) - entrada_fase_3) + 7200))})
+
             # TODO: mais intervalos??
-        # ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     # ATUALIZAR OS TOTAIS
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -513,20 +762,35 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     # FAZER AS MÉDIAS
-    # ---------------------------------------------------------------------------------------------------------
+    # -----------------------------------------------------------------------------------------------------------------
     for i in ["0","1","2","3","4","total"]:
-        tempos_fase_1.get(i).update({"medio": tempos_fase_1.get(i).get("medio")/num_utentes})
+        if(i=="total"):
+            tempos_fase_1.get(i).update({"medio": tempos_fase_1.get(i).get("medio")/num_utentes})
+        else:
+            utentes_aux = utentes_no_intervalo(1,i,utentes)
+            if(utentes_aux!=0):
+                tempos_fase_1.get(i).update({"medio": tempos_fase_1.get(i).get("medio")/utentes_aux})
 
     for i in ["A","B","C"]:
         for j in ["0","1","2","3","4","total"]:
-            tempos_fase_2.get(i).get(j).update({"medio": tempos_fase_2.get(i).get(j).get("medio")/num_utentes})
+            if(j=="total"):
+                tempos_fase_2.get(i).get(j).update({"medio": tempos_fase_2.get(i).get(j).get("medio")/num_utentes})
+            else:
+                utentes_aux = utentes_no_intervalo(2,j,utentes)
+                if(utentes_aux!=0):
+                    tempos_fase_2.get(i).get(j).update({"medio": tempos_fase_2.get(i).get(j).get("medio")/utentes_aux})
 
     for i in ["0","1","2","3","4","total"]:
-        tempos_fase_3.get(i).update({"medio": tempos_fase_3.get(i).get("medio")/num_utentes})
+        if(i=="total"):
+            tempos_fase_3.get(i).update({"medio": tempos_fase_3.get(i).get("medio")/num_utentes})
+        else:
+            utentes_aux = utentes_no_intervalo(3,i,utentes)
+            if(utentes_aux!=0):
+                tempos_fase_3.get(i).update({"medio": tempos_fase_3.get(i).get("medio")/utentes_aux})
     
     for i in ["0","1","2","3","4","total"]:
         tempos_globais.get(i).update({"medio": tempos_globais.get(i).get("medio")/num_utentes})
-    # ---------------------------------------------------------------------------------------------------------
+    # -----------------------------------------------------------------------------------------------------------------
 
     return(tempos_fase_1,tempos_fase_2,tempos_fase_3,tempos_globais)
 
@@ -618,13 +882,13 @@ def calcular_taxas_ocupacao(utentes,ultimo_instante): # função que calcula as 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     # CONVERTER PARA PERCENTAGENS
-    # -----------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------
     for k,v in ocupacoes.items():
         for k_2,v_2 in v.items():
             if(k_2=="4"): ocupacoes.get(k).update({k_2: (v_2/(ultimo_instante-28800))*100})
             elif(k_2=="total"): ocupacoes.get(k).update({k_2: (v_2/(ultimo_instante))*100})
             else: ocupacoes.get(k).update({k_2: (v_2/7200)*100})
-    # -----------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------
     
     return(ocupacoes)
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

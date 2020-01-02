@@ -22,7 +22,7 @@ balcao_Te = None
 # ----------------------------
 
 # PREPARATIVOS INICIAIS
-# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 num_utentes = total_utentes()
 utentes = gerar_utentes(num_utentes)
 infinito = 100000000
@@ -38,7 +38,7 @@ instante, tipo_evento, utente_atual = proximo_evento(tabela[-1],utentes,balcao_T
 utente_atual.percurso += "triagem "
 
 # IMPRIMIR CABEÇALHO E PRIMEIRA LINHA
-# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 print("\n# TABELA")
 print("--------")
 print("| {:<6} | {:<18} | {:<3} | {:<11} | {:<60} | {:<6} | {:<6} | {:<60} | {:<11} | {:<12} | {:<11} | {:<12} | {:<60} | {:<11} | {:<12} | {:<11} | {:<12} | {:<60} | {:<11} | {:<12} | {:<60} | {:<6} | {:<6} |".format("Clock","Evento","Utente","Próx. chegada","Fila triagem","Estado tr.","Partida tr.","Fila balcões A","Estado A1","Partida A1","Estado A2","Partida A2","Fila balcões B","Estado B1","Partida B1","Estado B2","Partida B2","Fila balcão C","Estado C1","Partida C1","Fila tesouraria","Estado te.","Partida te."))
@@ -132,19 +132,29 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_A1==None): # balcão A1 livre
                 balcao_A1 = utente_atual
                 linha_tabela.update({"partida_balcao_A1": instante + tempo_aux})
-                utente_atual.percurso += "balcao_A1 "
+                if(not utente_volta):
+                    utente_atual.percurso += "balcao_A1 "
+                else:
+                    utente_atual.percurso += "balcao_A1_volta "
                 controlo = "A1"
 
             elif(balcao_A2==None): # balcão A2 livre
                 balcao_A2 = utente_atual
                 linha_tabela.update({"partida_balcao_A2": instante + tempo_aux})
-                utente_atual.percurso += "balcao_A2 "
+                if(not utente_volta):
+                    utente_atual.percurso += "balcao_A2 "
+                else:
+                    utente_atual.percurso += "balcao_A2_volta "
                 controlo = "A2"
 
             if(controlo==None): # todos os balcões deste tipo ocupados, o utente vai para a fila
                 adicionar_fila(utente_atual,fila_fase_2_A)
-                utente_atual.chegadas_filas.update({"fila_fase_2_A": instante})
-                utente_atual.percurso += "fila_fase_2_A "
+                if(not utente_volta):
+                    utente_atual.chegadas_filas.update({"fila_fase_2_A": instante})
+                    utente_atual.percurso += "fila_fase_2_A "
+                else:
+                    utente_atual.chegadas_filas.update({"fila_fase_2_A_volta": instante})
+                    utente_atual.percurso += "fila_fase_2_A_volta "
 
         elif(utente_atual.tempos.get("B")!=None or (utente_volta==True and utente_atual.tempos.get("B_volta")!=None)): # o utente pretende ir para um balcão do tipo B
 
@@ -157,19 +167,29 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_B1==None): # balcão B1 livre
                 balcao_B1 = utente_atual
                 linha_tabela.update({"partida_balcao_B1": instante + tempo_aux})
-                utente_atual.percurso += "balcao_B1 "
+                if(not utente_volta):
+                    utente_atual.percurso += "balcao_B1 "
+                else:
+                    utente_atual.percurso += "balcao_B1_volta "
                 controlo = "B1"
 
             elif(balcao_B2==None): # balcão B2 livre
                 balcao_B2 = utente_atual
                 linha_tabela.update({"partida_balcao_B2": instante + tempo_aux})
-                utente_atual.percurso += "balcao_B2 "
+                if(not utente_volta):
+                    utente_atual.percurso += "balcao_B2 "
+                else:
+                    utente_atual.percurso += "balcao_B2_volta "
                 controlo = "B2"
 
             if(controlo==None): # todos os balcões deste tipo ocupados, o utente vai para a fila
                 adicionar_fila(utente_atual,fila_fase_2_B)
-                utente_atual.chegadas_filas.update({"fila_fase_2_B": instante})
-                utente_atual.percurso += "fila_fase_2_B "
+                if(not utente_volta):
+                    utente_atual.chegadas_filas.update({"fila_fase_2_B": instante})
+                    utente_atual.percurso += "fila_fase_2_B "
+                else:
+                    utente_atual.chegadas_filas.update({"fila_fase_2_B_volta": instante})
+                    utente_atual.percurso += "fila_fase_2_B_volta "
 
         elif(utente_atual.tempos.get("C")!=None or (utente_volta==True and utente_atual.tempos.get("C_volta")!=None)): # o utente pretende ir para um balcão do tipo B
 
@@ -182,13 +202,20 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_C1==None): # balcão C1 livre
                 balcao_C1 = utente_atual
                 linha_tabela.update({"partida_balcao_C1": instante + tempo_aux})
-                utente_atual.percurso += "balcao_C1 "
+                if(not utente_volta):
+                    utente_atual.percurso += "balcao_C1 "
+                else:
+                    utente_atual.percurso += "balcao_C1_volta "
                 controlo = "C1"
 
             if(controlo==None): # todos os balcões deste tipo ocupados, o utente vai para a fila
                 adicionar_fila(utente_atual,fila_fase_2_C)
-                utente_atual.chegadas_filas.update({"fila_fase_2_C": instante})
-                utente_atual.percurso += "fila_fase_2_C "
+                if(not utente_volta):
+                    utente_atual.chegadas_filas.update({"fila_fase_2_C": instante})
+                    utente_atual.percurso += "fila_fase_2_C "
+                else:
+                    utente_atual.chegadas_filas.update({"fila_fase_2_C_volta": instante})
+                    utente_atual.percurso += "fila_fase_2_C_volta "
 
         if(not utente_volta):
             # os valores dos balcões para os quais o utente não foi mantêm-se iguais
@@ -239,7 +266,7 @@ while(not parar_simulacao(tabela[-1])):
         aux = tipo_evento.split("_")[-1]
 
         # ATUALIZAR A PARTE DOS BALCÕES
-        # ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------------------------------------------------
         if("A" in aux): fila = fila_fase_2_A
         elif("B" in aux): fila = fila_fase_2_B
         else: fila = fila_fase_2_C
@@ -253,7 +280,11 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_A1!=None):
                 linha_tabela.update({"partida_balcao_A1": instante + balcao_A1.tempos.get("A")})
                 balcao_A1.percurso += "balcao_A1 "
-                balcao_A1.tempos_espera.update({"fila_fase_2_A": balcao_A1.tempos_espera.get("fila_fase_2_A") + (instante-balcao_A1.chegadas_filas.get("fila_fase_2_A"))})
+
+                if(balcao_A1.prioridade=="R" and balcao_A1.retrocesso_feito):
+                    balcao_A1.tempos_espera.update({"fila_fase_2_A_volta": (instante-balcao_A1.chegadas_filas.get("fila_fase_2_A_volta"))})
+                else:
+                    balcao_A1.tempos_espera.update({"fila_fase_2_A": (instante-balcao_A1.chegadas_filas.get("fila_fase_2_A"))})
 
             else:
                 linha_tabela.update({"partida_balcao_A1": infinito})
@@ -264,7 +295,11 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_A2!=None):
                 linha_tabela.update({"partida_balcao_A2": instante + balcao_A2.tempos.get("A")})
                 balcao_A2.percurso += "balcao_A2 "
-                balcao_A2.tempos_espera.update({"fila_fase_2_A": balcao_A2.tempos_espera.get("fila_fase_2_A") + (instante-balcao_A2.chegadas_filas.get("fila_fase_2_A"))})
+                
+                if(balcao_A2.prioridade=="R" and balcao_A2.retrocesso_feito):
+                    balcao_A2.tempos_espera.update({"fila_fase_2_A_volta": (instante-balcao_A2.chegadas_filas.get("fila_fase_2_A_volta"))})
+                else:
+                    balcao_A2.tempos_espera.update({"fila_fase_2_A": (instante-balcao_A2.chegadas_filas.get("fila_fase_2_A"))})
 
             else:
                 linha_tabela.update({"partida_balcao_A2": infinito})
@@ -275,7 +310,11 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_B1!=None):
                 linha_tabela.update({"partida_balcao_B1": instante + balcao_B1.tempos.get("B")})
                 balcao_B1.percurso += "balcao_B1 "
-                balcao_B1.tempos_espera.update({"fila_fase_2_B": balcao_B1.tempos_espera.get("fila_fase_2_B") + (instante-balcao_B1.chegadas_filas.get("fila_fase_2_B"))})
+                
+                if(balcao_B1.prioridade=="R" and balcao_B1.retrocesso_feito):
+                    balcao_B1.tempos_espera.update({"fila_fase_2_B_volta": (instante-balcao_B1.chegadas_filas.get("fila_fase_2_B_volta"))})
+                else:
+                    balcao_B1.tempos_espera.update({"fila_fase_2_B": (instante-balcao_B1.chegadas_filas.get("fila_fase_2_B"))})
 
             else:
                 linha_tabela.update({"partida_balcao_B1": infinito})
@@ -286,7 +325,11 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_B2!=None):
                 linha_tabela.update({"partida_balcao_B2": instante + balcao_B2.tempos.get("B")})
                 balcao_B2.percurso += "balcao_B2 "
-                balcao_B2.tempos_espera.update({"fila_fase_2_B": balcao_B2.tempos_espera.get("fila_fase_2_B") + (instante-balcao_B2.chegadas_filas.get("fila_fase_2_B"))})
+                
+                if(balcao_B2.prioridade=="R" and balcao_B2.retrocesso_feito):
+                    balcao_B2.tempos_espera.update({"fila_fase_2_B_volta": (instante-balcao_B2.chegadas_filas.get("fila_fase_2_B_volta"))})
+                else:
+                    balcao_B2.tempos_espera.update({"fila_fase_2_B": (instante-balcao_B2.chegadas_filas.get("fila_fase_2_B"))})
 
             else:
                 linha_tabela.update({"partida_balcao_B2": infinito})
@@ -297,11 +340,15 @@ while(not parar_simulacao(tabela[-1])):
             if(balcao_C1!=None):
                 linha_tabela.update({"partida_balcao_C1": instante + balcao_C1.tempos.get("C")})
                 balcao_C1.percurso += "balcao_C1 "
-                balcao_C1.tempos_espera.update({"fila_fase_2_C": balcao_C1.tempos_espera.get("fila_fase_2_C") + (instante-balcao_C1.chegadas_filas.get("fila_fase_2_C"))})
+                
+                if(balcao_C1.prioridade=="R" and balcao_C1.retrocesso_feito):
+                    balcao_C1.tempos_espera.update({"fila_fase_2_C_volta": (instante-balcao_C1.chegadas_filas.get("fila_fase_2_C_volta"))})
+                else:
+                    balcao_C1.tempos_espera.update({"fila_fase_2_C": (instante-balcao_C1.chegadas_filas.get("fila_fase_2_C"))})
 
             else:
                 linha_tabela.update({"partida_balcao_C1": infinito})
-        # ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------------------------------------------------
 
         # SEGUIR COM O UTENTE QUE SAIU DOS BALCÕES (ENTRADA NA FASE 3) OU SAÍDA DO SISTEMA
         # ----------------------------------------------------------------------------------------------------------------------------------
