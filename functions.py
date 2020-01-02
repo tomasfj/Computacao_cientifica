@@ -388,7 +388,7 @@ def utentes_no_intervalo(fase,intervalo,utentes):
                 
             if((passagem[0]>=menor and passagem[0]<=maior) or (passagem[1]>=menor and passagem[1]<=maior) or (menor>=passagem[0] and maior<=passagem[1])): num_utentes += 1
         # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        
+
     return(num_utentes)
 
 def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempos de espera mínimos, médios e máximos em todas as filas (em períodos parciais e globais)
@@ -534,7 +534,7 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
                     if((i.tempos_espera.get("fila_fase_2_" + balcao) - ((fim*7200) - entrada_fase_2))>tempos_fase_2.get(balcao).get(str(fim)).get("maximo")):
                         tempos_fase_2.get(balcao).get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_2_" + balcao) - ((fim*7200) - entrada_fase_2)})
 
-                elif((fim-inicio)==2): # o utente passou por 2 intervalos
+                elif((fim-inicio)==2): # o utente passou por 3 intervalos
 
                     # tempo de espera médio
                     tempos_fase_2.get(balcao).get(str(inicio)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + (fim*7200) - entrada_fase_2})
@@ -610,7 +610,7 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
                     if((i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - ((fim*7200) - entrada_fase_2))>tempos_fase_2.get(balcao).get(str(fim)).get("maximo")):
                         tempos_fase_2.get(balcao).get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_2_" + balcao + "_volta") - ((fim*7200) - entrada_fase_2)})
            
-                elif((fim-inicio)==2): # o utente passou por 2 intervalos
+                elif((fim-inicio)==2): # o utente passou por 3 intervalos
 
                     # tempo de espera médio
                     tempos_fase_2.get(balcao).get(str(inicio)).update({"medio": tempos_fase_2.get(balcao).get(str(inicio)).get("medio") + (fim*7200) - entrada_fase_2})
@@ -698,7 +698,7 @@ def calcular_tempos_espera(utentes,num_utentes): # função que calcula os tempo
                 if((i.tempos_espera.get("fila_fase_3") - ((fim*7200) - entrada_fase_3))>tempos_fase_3.get(str(fim)).get("maximo")):
                     tempos_fase_3.get(str(fim)).update({"maximo": i.tempos_espera.get("fila_fase_3") - ((fim*7200) - entrada_fase_3)})
 
-            elif((fim-inicio)==2): # o utente passou por 2 intervalos
+            elif((fim-inicio)==2): # o utente passou por 3 intervalos
 
                 # tempo de espera médio
                 tempos_fase_3.get(str(inicio)).update({"medio": tempos_fase_3.get(str(inicio)).get("medio") + (fim*7200) - entrada_fase_3})
