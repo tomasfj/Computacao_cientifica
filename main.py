@@ -406,7 +406,10 @@ for k,v in tempos_parciais_fase_1.items():
     elif(k=="3"): intervalo = "15-17h OU 21600-28800s"
     elif(k=="4"): intervalo = ">17h OU 28800-" + str(tabela[-1].get("clock")) + "s"
     else: intervalo = "TOTAL"
-    print((intervalo + " => mínimo: " + str(v.get("minimo")) + " médio: {:0.2f} máximo: " + str(v.get("maximo"))).format(v.get("medio")))
+    if(v.get("minimo")=="-"):
+        print(intervalo + " => mínimo: - médio: - máximo: -")
+    else:
+        print((intervalo + " => mínimo: " + str(v.get("minimo")) + " médio: {:0.2f} máximo: " + str(v.get("maximo"))).format(v.get("medio")))
 
 print("\n## Tempos de espera na Fase 2 (balcões)")
 for k,v in tempos_parciais_fase_2.items():
@@ -421,7 +424,10 @@ for k,v in tempos_parciais_fase_2.items():
             elif(k_2=="3"): intervalo = "15-17h OU 21600-28800s"
             elif(k_2=="4"): intervalo = ">17h OU 28800-" + str(tabela[-1].get("clock")) + "s"
             else: intervalo = "TOTAL"
-            print((intervalo + " => mínimo: " + str(v_2.get("minimo")) + " médio: {:0.2f} máximo: " + str(v_2.get("maximo"))).format(v_2.get("medio")))
+            if(v_2.get("minimo")=="-"):
+                print(intervalo + " => mínimo: - médio: - máximo: -")
+            else:
+                print((intervalo + " => mínimo: " + str(v_2.get("minimo")) + " médio: {:0.2f} máximo: " + str(v_2.get("maximo"))).format(v_2.get("medio")))
 
     elif(k=="B"): # balcões de tipo B
         print("\n| Balcões de tipo B")
@@ -433,7 +439,10 @@ for k,v in tempos_parciais_fase_2.items():
             elif(k_2=="3"): intervalo = "15-17h OU 21600-28800s"
             elif(k_2=="4"): intervalo = ">17h OU 28800-" + str(tabela[-1].get("clock")) + "s"
             else: intervalo = "TOTAL"
-            print((intervalo + " => mínimo: " + str(v_2.get("minimo")) + " médio: {:0.2f} máximo: " + str(v_2.get("maximo"))).format(v_2.get("medio")))
+            if(v_2.get("minimo")=="-"):
+                print(intervalo + " => mínimo: - médio: - máximo: -")
+            else:
+                print((intervalo + " => mínimo: " + str(v_2.get("minimo")) + " médio: {:0.2f} máximo: " + str(v_2.get("maximo"))).format(v_2.get("medio")))
 
     else: # balcões de tipo A
         print("\n| Balcão de tipo C")
@@ -445,7 +454,10 @@ for k,v in tempos_parciais_fase_2.items():
             elif(k_2=="3"): intervalo = "15-17h OU 21600-28800s"
             elif(k_2=="4"): intervalo = ">17h OU 28800-" + str(tabela[-1].get("clock")) + "s"
             else: intervalo = "TOTAL"
-            print((intervalo + " => mínimo: " + str(v_2.get("minimo")) + " médio: {:0.2f} máximo: " + str(v_2.get("maximo"))).format(v_2.get("medio")))
+            if(v_2.get("minimo")=="-"):
+                print(intervalo + " => mínimo: - médio: - máximo: -")
+            else:
+                print((intervalo + " => mínimo: " + str(v_2.get("minimo")) + " médio: {:0.2f} máximo: " + str(v_2.get("maximo"))).format(v_2.get("medio")))
 
 print("\n## Tempos de espera na Fase 3 (tesouraria)")
 for k,v in tempos_parciais_fase_3.items():
@@ -456,7 +468,10 @@ for k,v in tempos_parciais_fase_3.items():
     elif(k=="3"): intervalo = "15-17h OU 21600-28800s"
     elif(k=="4"): intervalo = ">17h OU 28800-" + str(tabela[-1].get("clock")) + "s"
     else: intervalo = "TOTAL"
-    print((intervalo + " => mínimo: " + str(v.get("minimo")) + " médio: {:0.2f} máximo: " + str(v.get("maximo"))).format(v.get("medio")))
+    if(v.get("minimo")=="-"):
+        print(intervalo + " => mínimo: - médio: - máximo: -")
+    else:
+        print((intervalo + " => mínimo: " + str(v.get("minimo")) + " médio: {:0.2f} máximo: " + str(v.get("maximo"))).format(v.get("medio")))
 
 print("\n## Tempos de espera globais")
 for k,v in tempos_globais.items():
@@ -467,7 +482,10 @@ for k,v in tempos_globais.items():
     elif(k=="3"): intervalo = "21600-28800s"
     elif(k=="4"): intervalo = ">17h OU 28800-" + str(tabela[-1].get("clock")) + "s"
     else: intervalo = "TOTAL"
-    print((intervalo + " => mínimo: " + str(v.get("minimo")) + " médio: {:0.2f} máximo: " + str(v.get("maximo"))).format(v.get("medio")))
+    if(v.get("minimo")=="-"):
+        print(intervalo + " => mínimo: - médio: - máximo: -")
+    else:
+        print((intervalo + " => mínimo: " + str(v.get("minimo")) + " médio: {:0.2f} máximo: " + str(v.get("maximo"))).format(v.get("medio")))
 print("--------------------------------------------")
 
 print("\n# TAXAS DE OCUPAÇÃO")

@@ -420,12 +420,12 @@ def calcular_tempos_espera(utentes,num_utentes,ultimo_instante): # função que 
     infinito = 100000000
 
     # dicionários para os tempos
-    tempos_fase_1 = {"0": {"minimo": 0, "medio": 0, "maximo": 0}, "1": {"minimo": 0, "medio": 0, "maximo": 0}, "2": {"minimo": 0, "medio": 0, "maximo": 0}, "3": {"minimo": 0, "medio": 0, "maximo": 0}, "4": {"minimo": 0, "medio": 0, "maximo": 0}, "total": {"minimo": 0, "medio": 0, "maximo": 0}}
-    tempos_fase_2 = {"A": {"0": {"minimo": 0, "medio": 0, "maximo": 0}, "1": {"minimo": 0, "medio": 0, "maximo": 0}, "2": {"minimo": 0, "medio": 0, "maximo": 0}, "3": {"minimo": 0, "medio": 0, "maximo": 0}, "4": {"minimo": 0, "medio": 0, "maximo": 0}, "total": {"minimo": 0, "medio": 0, "maximo": 0}}, 
-                            "B": {"0": {"minimo": 0, "medio": 0, "maximo": 0}, "1": {"minimo": 0, "medio": 0, "maximo": 0}, "2": {"minimo": 0, "medio": 0, "maximo": 0}, "3": {"minimo": 0, "medio": 0, "maximo": 0}, "4": {"minimo": 0, "medio": 0, "maximo": 0}, "total": {"minimo": 0, "medio": 0, "maximo": 0}},
-                            "C": {"0": {"minimo": 0, "medio": 0, "maximo": 0}, "1": {"minimo": 0, "medio": 0, "maximo": 0}, "2": {"minimo": 0, "medio": 0, "maximo": 0}, "3": {"minimo": 0, "medio": 0, "maximo": 0}, "4": {"minimo": 0, "medio": 0, "maximo": 0}, "total": {"minimo": 0, "medio": 0, "maximo": 0}}}
-    tempos_fase_3 = {"0": {"minimo": 0, "medio": 0, "maximo": 0}, "1": {"minimo": 0, "medio": 0, "maximo": 0}, "2": {"minimo": 0, "medio": 0, "maximo": 0}, "3": {"minimo": 0, "medio": 0, "maximo": 0}, "4": {"minimo": 0, "medio": 0, "maximo": 0}, "total": {"minimo": 0, "medio": 0, "maximo": 0}}
-    tempos_globais = {"0": {"minimo": 0, "medio": 0, "maximo": 0}, "1": {"minimo": 0, "medio": 0, "maximo": 0}, "2": {"minimo": 0, "medio": 0, "maximo": 0}, "3": {"minimo": 0, "medio": 0, "maximo": 0}, "4": {"minimo": 0, "medio": 0, "maximo": 0}, "total": {"minimo": 0, "medio": 0, "maximo": 0}}
+    tempos_fase_1 = {"0": {"minimo": infinito, "medio": 0, "maximo": 0}, "1": {"minimo": infinito, "medio": 0, "maximo": 0}, "2": {"minimo": infinito, "medio": 0, "maximo": 0}, "3": {"minimo": infinito, "medio": 0, "maximo": 0}, "4": {"minimo": infinito, "medio": 0, "maximo": 0}, "total": {"minimo": infinito, "medio": 0, "maximo": 0}}
+    tempos_fase_2 = {"A": {"0": {"minimo": infinito, "medio": 0, "maximo": 0}, "1": {"minimo": infinito, "medio": 0, "maximo": 0}, "2": {"minimo": infinito, "medio": 0, "maximo": 0}, "3": {"minimo": infinito, "medio": 0, "maximo": 0}, "4": {"minimo": infinito, "medio": 0, "maximo": 0}, "total": {"minimo": infinito, "medio": 0, "maximo": 0}}, 
+                            "B": {"0": {"minimo": infinito, "medio": 0, "maximo": 0}, "1": {"minimo": infinito, "medio": 0, "maximo": 0}, "2": {"minimo": infinito, "medio": 0, "maximo": 0}, "3": {"minimo": infinito, "medio": 0, "maximo": 0}, "4": {"minimo": infinito, "medio": 0, "maximo": 0}, "total": {"minimo": infinito, "medio": 0, "maximo": 0}},
+                            "C": {"0": {"minimo": infinito, "medio": 0, "maximo": 0}, "1": {"minimo": infinito, "medio": 0, "maximo": 0}, "2": {"minimo": infinito, "medio": 0, "maximo": 0}, "3": {"minimo": infinito, "medio": 0, "maximo": 0}, "4": {"minimo": infinito, "medio": 0, "maximo": 0}, "total": {"minimo": infinito, "medio": 0, "maximo": 0}}}
+    tempos_fase_3 = {"0": {"minimo": infinito, "medio": 0, "maximo": 0}, "1": {"minimo": infinito, "medio": 0, "maximo": 0}, "2": {"minimo": infinito, "medio": 0, "maximo": 0}, "3": {"minimo": infinito, "medio": 0, "maximo": 0}, "4": {"minimo": infinito, "medio": 0, "maximo": 0}, "total": {"minimo": infinito, "medio": 0, "maximo": 0}}
+    tempos_globais = {"0": {"minimo": infinito, "medio": 0, "maximo": 0}, "1": {"minimo": infinito, "medio": 0, "maximo": 0}, "2": {"minimo": infinito, "medio": 0, "maximo": 0}, "3": {"minimo": infinito, "medio": 0, "maximo": 0}, "4": {"minimo": infinito, "medio": 0, "maximo": 0}, "total": {"minimo": infinito, "medio": 0, "maximo": 0}}
 
     for i in utentes:
 
@@ -830,6 +830,30 @@ def calcular_tempos_espera(utentes,num_utentes,ultimo_instante): # função que 
             if(utentes_aux!=0):
                 tempos_globais.get(i).update({"medio": tempos_globais.get(i).get("medio")/utentes_aux})
     # -----------------------------------------------------------------------------------------------------------------
+
+    # FAZER AJUSTES AOS TEMPOS QUE NÃO FORAM ATUALIZADOS
+    # ------------------------------------------------------------------------------------------------------------------
+    for i in ["0","1","2","3","4","total"]:
+        if(tempos_fase_1.get(i).get("minimo")==infinito): tempos_fase_1.get(i).update({"minimo": "-"})
+        if(tempos_fase_1.get(i).get("medio")==0.00): tempos_fase_1.get(i).update({"medio": "-"})
+        if(tempos_fase_1.get(i).get("maximo")==0): tempos_fase_1.get(i).update({"maximo": "-"})
+
+    for i in ["A","B","C"]:
+        for j in ["0","1","2","3","4","total"]:
+            if(tempos_fase_2.get(i).get(j).get("minimo")==infinito): tempos_fase_2.get(i).get(j).update({"minimo": "-"})
+            if(tempos_fase_2.get(i).get(j).get("medio")==0.00): tempos_fase_2.get(i).get(j).update({"medio": "-"})
+            if(tempos_fase_2.get(i).get(j).get("maximo")==0): tempos_fase_2.get(i).get(j).update({"maximo": "-"})
+
+    for i in ["0","1","2","3","4","total"]:
+        if(tempos_fase_3.get(i).get("minimo")==infinito): tempos_fase_3.get(i).update({"minimo": "-"})
+        if(tempos_fase_3.get(i).get("medio")==0.00): tempos_fase_3.get(i).update({"medio": "-"})
+        if(tempos_fase_3.get(i).get("maximo")==0): tempos_fase_3.get(i).update({"maximo": "-"})
+
+    for i in ["0","1","2","3","4","total"]:
+        if(tempos_globais.get(i).get("minimo")==infinito): tempos_globais.get(i).update({"minimo": "-"})
+        if(tempos_globais.get(i).get("medio")==0.00): tempos_globais.get(i).update({"medio": "-"})
+        if(tempos_globais.get(i).get("maximo")==0): tempos_globais.get(i).update({"maximo": "-"})
+    # ------------------------------------------------------------------------------------------------------------------
 
     return(tempos_fase_1,tempos_fase_2,tempos_fase_3,tempos_globais)
 
